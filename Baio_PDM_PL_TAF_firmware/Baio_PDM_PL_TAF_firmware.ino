@@ -44,7 +44,7 @@ byte PDMvalues = 255;
 Joystick_ Joystick(
   0x03, // id of the gamepad, icrease in other pads to avoid conflict
   0x05, //Gamepad
-  42, // button
+  12, // button
   0, // hat
   true, // X
   true, // Y
@@ -193,11 +193,24 @@ void scanTAF() {
     if (value != bitRead(TAFvalues, i)) {
       bitWrite(TAFvalues, i, value);
 
-      // Assign to controller
-      Joystick.setButton(i, value);
-      
+      // only NVG, test and press rotary
+      switch (i) {
+        case 0:
+          Joystick.setButton(7, value);
+          break;
+        case 3:
+          Joystick.setButton(8, value);
+          break;
+        case 4:
+          Joystick.setButton(9, value);
+          break;
+        default:
+          break;
+      }
+      // debug
       // Serial.println(i);
       // Serial.println(value);
+      // Serial.println("----");
     }
 
     digitalWrite(TAFclockPin, 1);
@@ -373,6 +386,9 @@ void incrementTAFChannel() {
   } else {
     TAFChanel++;
   }
+  Joystick.setButton(10, true);
+  delay(100);
+  Joystick.setButton(10, false);
 }
 
 void decrementTAFChannel() {
@@ -381,6 +397,9 @@ void decrementTAFChannel() {
   } else {
     TAFChanel--;
   }
+  Joystick.setButton(11, true);
+  delay(100);
+  Joystick.setButton(11, false);
 }
 
 
