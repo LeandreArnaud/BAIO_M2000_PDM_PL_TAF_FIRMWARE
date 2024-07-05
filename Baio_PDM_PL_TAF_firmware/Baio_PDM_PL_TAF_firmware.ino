@@ -142,6 +142,7 @@ DcsBios::IntegerBuffer cautAdvLgtBuffer(0x72a2, 0xffff, 0, onCautAdvLgtChange);
 
 /********* LOOP **********/
 void loop() {
+  DcsBios::loop();
   scanPL();
   scanTAF();
   scanPDM();
