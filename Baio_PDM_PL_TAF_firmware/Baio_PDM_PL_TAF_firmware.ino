@@ -238,16 +238,19 @@ void scanPL() {
     ) {
       PLvalues[i] = scaledInvertedValue;
 
-      // TODO: Assign to DCS bios if existing, otherwise: 
-      if (i == 2) {
-        analogWrite(PDMbacklightPin, PLvalues[i]);
-        analogWrite(PLbacklightPin, PLvalues[i]);
-        analogWrite(TAFbacklightPin, PLvalues[i]);
+      // if dcs bios is not connected
+      if (!Serial.available()) {
+        if (i == 2) {
+          analogWrite(PDMbacklightPin, PLvalues[i]);
+          analogWrite(PLbacklightPin, PLvalues[i]);
+          analogWrite(TAFbacklightPin, PLvalues[i]);
+        }
+        if (i == 4) {
+          matrix.setBrightness(16*PLvalues[i]/255);
+          matrix.setDisplayState(PLvalues[i] != 0);
+        }
       }
-      if (i == 4) {
-        matrix.setBrightness(16*PLvalues[i]/255);
-        matrix.setDisplayState(PLvalues[i] != 0);
-      }
+      
 
       changeJoyAxis(i);
     }
