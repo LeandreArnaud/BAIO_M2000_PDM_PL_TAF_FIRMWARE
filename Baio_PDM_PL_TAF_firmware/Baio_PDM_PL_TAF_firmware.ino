@@ -122,16 +122,18 @@ void setup() {
 
 /********* DCS BIOS **********/
 // backlight
-void onDashPanelLgtKnobChange(unsigned int newValue) {
+void onConsolePanelLgtKnobChange(unsigned int newValue) {
     analogWrite(TAFbacklightPin, newValue/256);
     analogWrite(PDMbacklightPin, newValue/256);
     analogWrite(PLbacklightPin, newValue/256);
 }
-DcsBios::IntegerBuffer dashPanelLgtKnobBuffer(0x729c, 0xffff, 0, onDashPanelLgtKnobChange);
+DcsBios::IntegerBuffer consolePanelLgtKnobChange(0x72a0, 0xffff, 0, onConsolePanelLgtKnobChange);
 void onCautAdvLgtChange(unsigned int newValue) {
     matrix.setBrightness(newValue/4096);
 }
 DcsBios::IntegerBuffer cautAdvLgtBuffer(0x72a2, 0xffff, 0, onCautAdvLgtChange);
+
+// TODO: adds TAF chanel selection linked to DCS BIOS
 
 
 
