@@ -123,13 +123,25 @@ void setup() {
 /********* DCS BIOS **********/
 // backlight
 void onConsolePanelLgtKnobChange(unsigned int newValue) {
+  if (newValue <= 2000) {
+    analogWrite(TAFbacklightPin, 0);
+    analogWrite(PDMbacklightPin, 0);
+    analogWrite(PLbacklightPin, 0);
+  } else {
     analogWrite(TAFbacklightPin, newValue/256);
     analogWrite(PDMbacklightPin, newValue/256);
-    analogWrite(PLbacklightPin, newValue/256);
+    analogWrite(PLbacklightPin, newValue/256); 
+  } 
 }
 DcsBios::IntegerBuffer consolePanelLgtKnobBuffer(0x72a0, 0xffff, 0, onConsolePanelLgtKnobChange);
 void onCautAdvLgtChange(unsigned int newValue) {
+  if (newValue <= 2000) {
+    matrix.setBrightness(0);
+    matrix.setDisplayState(false);
+  } else {
     matrix.setBrightness(newValue/4096);
+    matrix.setDisplayState(true);
+  }
 }
 DcsBios::IntegerBuffer cautAdvLgtBuffer(0x72a2, 0xffff, 0, onCautAdvLgtChange);
 
