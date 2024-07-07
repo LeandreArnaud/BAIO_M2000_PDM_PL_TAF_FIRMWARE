@@ -387,22 +387,30 @@ void detectEncoders() {
 }
 
 void incrementTAFChannel() {
-  if (TAFChanel == 20) {
-    TAFChanel = 1;
-  } else {
-    TAFChanel++;
+  // if dcs bios is not connected
+  if (!Serial.available()) {
+    if (TAFChanel == 20) {
+      TAFChanel = 1;
+    } else {
+      TAFChanel++;
+    }
   }
+  
   Joystick.setButton(10, true);
   delay(100);
   Joystick.setButton(10, false);
 }
 
 void decrementTAFChannel() {
-  if (TAFChanel == 1) {
-    TAFChanel = 20;
-  } else {
-    TAFChanel--;
+  // if dcs bios is not connected
+  if (!Serial.available()) {
+    if (TAFChanel == 1) {
+      TAFChanel = 20;
+    } else {
+      TAFChanel--;
+    }
   }
+  
   Joystick.setButton(11, true);
   delay(100);
   Joystick.setButton(11, false);
