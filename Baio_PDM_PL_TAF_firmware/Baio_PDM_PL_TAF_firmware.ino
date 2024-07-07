@@ -127,7 +127,7 @@ void onConsolePanelLgtKnobChange(unsigned int newValue) {
     analogWrite(PDMbacklightPin, newValue/256);
     analogWrite(PLbacklightPin, newValue/256);
 }
-DcsBios::IntegerBuffer consolePanelLgtKnobChange(0x72a0, 0xffff, 0, onConsolePanelLgtKnobChange);
+DcsBios::IntegerBuffer consolePanelLgtKnobBuffer(0x72a0, 0xffff, 0, onConsolePanelLgtKnobChange);
 void onCautAdvLgtChange(unsigned int newValue) {
     matrix.setBrightness(newValue/4096);
 }
