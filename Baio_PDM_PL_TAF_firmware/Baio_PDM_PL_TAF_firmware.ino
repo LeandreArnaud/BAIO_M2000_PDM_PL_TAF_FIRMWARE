@@ -29,8 +29,9 @@ int TAFChanel = 1;
 int oldTAFChanel = 0;
 bool oldTAFEncoderVal = false;
 unsigned long lastDebounceTime = 0;
-const unsigned long debounceDelay = 200;
+const unsigned long debounceDelay = 300; // ms min between two encoder reverse
 bool lastTAFEncoderMoov = true; // true = increase
+const int creneau_T = 10; // ms duration for high states of encoder button
 
 byte PLvalues[6] = {0, 0, 0, 0, 0, 0};
 const int PLswitchNumber = 6;
@@ -441,7 +442,7 @@ void incrementTAFChannel() {
   }
   
   Joystick.setButton(10, true);
-  delay(100);
+  delay(creneau_T);
   Joystick.setButton(10, false);
 }
 
@@ -456,7 +457,7 @@ void decrementTAFChannel() {
   }
   
   Joystick.setButton(11, true);
-  delay(100);
+  delay(creneau_T);
   Joystick.setButton(11, false);
 }
 
