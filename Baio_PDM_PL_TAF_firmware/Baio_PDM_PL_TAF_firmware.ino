@@ -44,7 +44,7 @@ byte PDMvalues = 255;
 Joystick_ Joystick(
   0x03, // id of the gamepad, icrease in other pads to avoid conflict
   0x05, //Gamepad
-  12, // button
+  18, // button 12 button but 18 to get the two positions of toggles
   0, // hat
   true, // X
   true, // Y
@@ -185,6 +185,36 @@ void scanPDM() {
       // Assign to controller
       // threatJoystickSpecialCases(i, value);
       Joystick.setButton(i, value);
+
+      // debug
+      // Serial.println(i);
+      // Serial.println(value);
+      // Serial.println("----");
+
+      // 2 positions toogles on PDM
+      switch (i) {
+      case 0:
+        Joystick.setButton(12, !value);
+        break;
+      case 1:
+        Joystick.setButton(13, !value);
+        break;
+      case 2:
+        Joystick.setButton(14, !value);
+        break;
+      case 3:
+        Joystick.setButton(15, !value);
+        break;
+      // those two are for the inition null, D or G 
+      case 5:
+        Joystick.setButton(16, !value && !bitRead(PDMvalues, 6));
+        break;
+      case 6:
+        Joystick.setButton(16, !value && !bitRead(PDMvalues, 5));
+        break;
+      default:
+        break;
+      }
     }
 
     digitalWrite(PDMclockPin, 1);
@@ -214,7 +244,9 @@ void scanTAF() {
           Joystick.setButton(7, value);
           break;
         case 3:
+          // JVN
           Joystick.setButton(8, value);
+          Joystick.setButton(17, !value);
           break;
         case 4:
           Joystick.setButton(9, value);
